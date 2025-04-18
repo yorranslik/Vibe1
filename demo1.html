@@ -4,38 +4,76 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="A minimalistic website displaying four sleek metrics in a modern, clean design. Perfect for showcasing data in a visually appealing way.">
-    <meta name="keywords" content="minimalistic website, metrics display, clean design, modern UI, sleek interface">
-    <meta name="author" content="yorranslik">
-    <meta name="robots" content="index, follow">
-    
-    <meta property="og:title" content="Minimalistic Metrics Website">
-    <meta property="og:description" content="A modern, sleek, and clean design showcasing four detailed metrics.">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://github.com/yorranslik/Vibe1">
-    <meta property="og:image" content="path-to-your-og-image.jpg"> <!-- Replace with actual image link -->
-    
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Minimalistic Metrics Website">
-    <meta name="twitter:description" content="A modern, sleek, and clean design showcasing four detailed metrics.">
-    <meta name="twitter:image" content="path-to-your-twitter-image.jpg"> <!-- Replace with actual image link -->
-    
-    <title>Minimalistic Metrics - Sleek Design for Data Presentation</title>
+    <title>Dynamic Metrics Dashboard</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="container">
-        <div class="block">
-            <p class="metric">Metric 1</p>
+    <header>
+        <h1>Dynamic Metrics Dashboard</h1>
+        <p>Monitor your key metrics effortlessly. Data updates dynamically from a CSV file.</p>
+    </header>
+    <main>
+        <div class="container">
+            <div class="block">
+                <p class="metric-title" id="metric1-title">Loading...</p>
+                <p class="metric-value" id="metric1-value">Loading...</p>
+            </div>
+            <div class="block">
+                <p class="metric-title" id="metric2-title">Loading...</p>
+                <p class="metric-value" id="metric2-value">Loading...</p>
+            </div>
+            <div class="block">
+                <p class="metric-title" id="metric3-title">Loading...</p>
+                <p class="metric-value" id="metric3-value">Loading...</p>
+            </div>
+            <div class="block">
+                <p class="metric-title" id="metric4-title">Loading...</p>
+                <p class="metric-value" id="metric4-value">Loading...</p>
+            </div>
         </div>
-        <div class="block">
-            <p class="metric">Metric 2</p>
-        </div>
-        <div class="block">
-            <p class="metric">Metric 3</p>
-        </div>
-        <div class="block">
-            <p class="metric">Metric 4</p>
-        </div>
-    </div>
+        <p class="last-updated" id="last-updated">Last Updated: Loading...</p>
+    </main>
+    <footer>
+        <p>&copy; 2025 yorranslik. All rights reserved.</p>
+    </footer>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Path to your CSV file
+            const csvPath = "metrics.csv";
+
+            // Fetch and parse the CSV file
+            fetch(csvPath)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error("Network response was not ok " + response.statusText);
+                    }
+                    return response.text();
+                })
+                .then(data => {
+                    const rows = data.split("\n").map(row => row.split(","));
+                    
+                    // Update the metrics dynamically
+                    document.getElementById("metric1-title").textContent = rows[1][0];
+                    document.getElementById("metric1-value").textContent = rows[1][1];
+
+                    document.getElementById("metric2-title").textContent = rows[2][0];
+                    document.getElementById("metric2-value").textContent = rows[2][1];
+
+                    document.getElementById("metric3-title").textContent = rows[3][0];
+                    document.getElementById("metric3-value").textContent = rows[3][1];
+
+                    document.getElementById("metric4-title").textContent = rows[4][0];
+                    document.getElementById("metric4-value").textContent = rows[4][1];
+
+                    // Update the "last updated" timestamp
+                    const now = new Date();
+                    document.getElementById("last-updated").textContent =
+                        `Last Updated: ${now.toLocaleDateString()} ${now.toLocaleTimeString()}`;
+                })
+                .catch(error => {
+                    console.error("Error fetching or parsing the CSV file:", error);
+                });
+        });
+    </script>
 </body>
 </html>
